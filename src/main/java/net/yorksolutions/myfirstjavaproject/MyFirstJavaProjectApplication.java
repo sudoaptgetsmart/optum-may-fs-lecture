@@ -21,7 +21,7 @@ import org.springframework.web.client.RestTemplate;
 // null - black
 // void - the absence of any color
 
-//@SpringBootApplication(exclude={DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
+@SpringBootApplication(exclude={DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 public class MyFirstJavaProjectApplication {
 
     public int p;
@@ -36,8 +36,7 @@ public class MyFirstJavaProjectApplication {
     //      - name
     // method body
     public static void main(String[] args) {
-//        SpringApplication.run(MyFirstJavaProjectApplication.class, args);
-        System.out.println("hello");
+        SpringApplication.run(MyFirstJavaProjectApplication.class, args);
         // fetch in JS makes an HTTP request and provides the response via a promise
         // HTTP request
         // url - where should this request go? who should it go to?
@@ -49,18 +48,13 @@ public class MyFirstJavaProjectApplication {
         //      PATCH - change a part of something
         // Body - payload related to the request
 
-        // equivalent of fetch in Java is a RestTemplate
-        // var - please make an educated guess as to what type this is
-        // final - you can't reassign the variable (the object can still be changed)
-        final var rest = new RestTemplate(); // I now have the ability to make an HTTP request
-        // REST uses JSON
-        final var response = rest.getForEntity("http://ip.jsontest.com", String.class);
-        System.out.println(response.getBody());
+        // Client makes a request
+        // Server listens for a request
 
-        // let someVar = 'some string'
-        // console.log(typeof someVar) // string
-        // someVar = 5
-        // console.log(typeof someVar) // number
+        // Spring makes it easy for us to create an HTTP server in Java
+        // Spring boot packages everything into one jar file
+
+
     }
 
 }

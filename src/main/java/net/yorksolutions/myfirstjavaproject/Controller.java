@@ -1,5 +1,6 @@
 package net.yorksolutions.myfirstjavaproject;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,5 +34,20 @@ public class Controller {
     String ip() {
         final RestTemplate rest = new RestTemplate();
         return rest.getForObject("http://ip.jsontest.com", String.class);
+    }
+
+    private static class IP {
+        @JsonProperty
+        String ip;
+    }
+
+    // Act as a middle man for ip.jsontest.com
+    @GetMapping("/ipjson")
+    String ipjson() {
+        final RestTemplate rest = new RestTemplate();
+        // RestTemplate will assume that the response is JSON formatted, and will try to parse
+        //     the json string into the java object that we specify
+        final IP ipResponse = rest.getForObject("http://ip.jsontest.com", IP.class);
+        return ipResponse.ip;
     }
 }

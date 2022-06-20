@@ -37,8 +37,8 @@ public class Controller {
     }
 
     private static class IP {
-        @JsonProperty
-        String ip;
+        @JsonProperty("ip")
+        String ipAddress;
     }
 
     // Act as a middle man for ip.jsontest.com
@@ -48,6 +48,18 @@ public class Controller {
         // RestTemplate will assume that the response is JSON formatted, and will try to parse
         //     the json string into the java object that we specify
         final IP ipResponse = rest.getForObject("http://ip.jsontest.com", IP.class);
-        return ipResponse.ip;
+        return ipResponse.ipAddress;
+    }
+    private static class Headers {
+        @JsonProperty("Host")
+        String host;
+        @JsonProperty("User-Agent")
+        String userAgent;
+    }
+
+    @GetMapping("/headers")
+    Headers headers() {
+        final RestTemplate rest = new RestTemplate();
+        return rest.getForObject("http://headers.jsontest.com", Headers.class);
     }
 }

@@ -1,4 +1,4 @@
-package net.yorksolutions.myfirstjavaproject;
+package net.yorksolutions.myfirstjavaproject.json;
 
 public class DateTime {
 

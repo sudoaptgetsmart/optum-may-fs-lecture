@@ -1,5 +1,6 @@
 package net.yorksolutions.myfirstjavaproject.json;
 
+import net.yorksolutions.myfirstjavaproject.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,25 +20,39 @@ import java.util.Map;
 @RequestMapping("/")
 public class JsonController {
 
+    Headers header;
+
+//    JsonController() {header = new Headers();}
+
+    public JsonController(Headers header) {
+        this.header = header;
+    }
+
+    public void setHeader(Headers header) {
+        this.header = header;
+    }
+
     // Assignment
 
     @GetMapping("/headers2")
-    public Map<String, String> header(
-            @RequestHeader Map<String, String> headers) {
-        return headers;
+     {public Object header()
+        return header;
+    }
+
+    HttpServletRequest httpServletRequest;
+    void setHttpServletRequest(HttpServletRequest httpServletRequest) {
+        this.httpServletRequest = httpServletRequest;
+    }
+
+    Controller() {
+        httpServletRequest = null;
     }
 
     @GetMapping("/ip2")
-    private static String getClientIp(HttpServletRequest request) {
-        String remoteAddr = "";
-
-        if (request != null) {
-            remoteAddr = request.getHeader("X-FORWARDED=FOR");
-            if (remoteAddr == null || "".equals(remoteAddr)) {
-                remoteAddr = request.getRemoteAddr();
-            }
-        }
-        return remoteAddr;
+    public Ip ip(HttpServletRequest httpServletRequest) {
+        if (this.httpServletRequest != null)
+            httpServletRequest = this.httpServletRequest;
+        return new Ip(httpServletRequest.getRemoteAddr());
     }
 
     @GetMapping("/date2")

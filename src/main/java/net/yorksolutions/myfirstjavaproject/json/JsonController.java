@@ -1,10 +1,7 @@
 package net.yorksolutions.myfirstjavaproject.json;
 
 import net.yorksolutions.myfirstjavaproject.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigInteger;
@@ -16,8 +13,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+@CrossOrigin
 @RestController
-@RequestMapping("/")
 public class JsonController {
 
     Headers header;
@@ -34,20 +31,19 @@ public class JsonController {
 
     // Assignment
 
-    @GetMapping("/headers2")
-     {public Object header()
-        return header;
-    }
-
     HttpServletRequest httpServletRequest;
     void setHttpServletRequest(HttpServletRequest httpServletRequest) {
         this.httpServletRequest = httpServletRequest;
     }
 
-    Controller() {
+    JsonController() {
         httpServletRequest = null;
     }
 
+    @GetMapping("/headers2")
+    public Object header(){
+        return header;
+    }
     @GetMapping("/ip2")
     public Ip ip(HttpServletRequest httpServletRequest) {
         if (this.httpServletRequest != null)

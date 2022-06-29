@@ -6,6 +6,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class GenerateMD5 {
+    public GenerateMD5(String text) {
+    }
+
     public static String generateMD5(String to_be_md5) {
         String md5_sum = "";
 

@@ -3,7 +3,7 @@
 version: '3'
 
 services:
-  mydb:
+  jsondb:
     image: 'postgres:latest'
     ports:
       - 5432:5432

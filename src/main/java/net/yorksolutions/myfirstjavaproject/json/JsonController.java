@@ -2,10 +2,12 @@ package net.yorksolutions.myfirstjavaproject.json;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import net.yorksolutions.myfirstjavaproject.Controller;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.DatatypeConverter;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -14,16 +16,15 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.io.IOException;
 
 @CrossOrigin
 @RestController
 public class JsonController {
-    @JsonProperty("json")
-    String json;
 
     // Assignment
 
-    HttpServletRequest httpServletRequest;
+    static HttpServletRequest httpServletRequest;
 
     void setHttpServletRequest(HttpServletRequest httpServletRequest) {
         this.httpServletRequest = httpServletRequest;
@@ -44,34 +45,67 @@ public class JsonController {
     Map<String, String> headers(@RequestHeader Map<String, String> headers) {
         return headers;
     }
+//    NOT USED
+//    @GetMapping("/date2")
+//    public String main(String[] args) {
+//        // Instantiate a Date object
+//        Date date = new Date();
+//        // display time and date using toString()
+//        return (date.toString());
+//    }
 
-    @GetMapping("/date2")
-    public String main(String[] args) {
-        // Instantiate a Date object
-        Date date = new Date();
-        // display time and date using toString()
-        return (date.toString());
+    // DateTime with Alex
+    @GetMapping("/date-time")
+    public DateTime dateTime() {
+        long currentTime = System.currentTimeMillis();
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss SSS");
+        String dateResponse = dtf.format(now);
+        String myDate = dateResponse.substring(0, 10);
+        String myTime = dateResponse.substring(11, 19);
+
+        return (new DateTime(myTime, myDate, currentTime));
     }
 
     // MD5
-//    @GetMapping("/md5")
-//    public String to_be_mmd5 = httpServletRequest.getParameter("text");
-//    json.put("original",to_be_mmd5);
+    @GetMapping("/md5")
+    @CrossOrigin
+    GenerateMD5 md5(@RequestParam(name= "text") String text) {
+        return new GenerateMD5(text);
+    }
+//    public static String to_be_md5 = httpServletRequest.getParameter("text");
 //
-//    try{
-//        String md5 = GenerateMD5.generateMD5(to_be_md5);
-//        json.put("md5", md5);
-//    }
-//    catch(RuntimeException e)
+//    static {
+//        MessageDigest md = null;
+//        try {
+//            md = MessageDigest.getInstance("MD5");
+//        } catch (NoSuchAlgorithmException e) {
+//            throw new RuntimeException(e);
+//        }
+//        md.update(to_be_md5.getBytes());
+//        byte[] digest = md.digest();
+//        String myHash = DatatypeConverter
+//                .printHexBinary(digest).toUpperCase();
+
+//   ----------------------------------------------------------------------------------
+//    public String to_be_md5 = httpServletRequest.getParameter("text");
 //
 //    {
-//        //A RuntimeException was encountered. The provided String
-//        //had an error.
-//        json.put("error", "An error was encountered during MD5 hashing. Message: " + e.getMessage());
-//        json.put("info", "You must pass a String through the ?text= parameter for a hash to be calculated.");
+//        json.put("original", to_be_md5);
+//
+//        try {
+//            String md5 = GenerateMD5.generateMD5(to_be_md5);
+//            json.put("md5", md5);
+//        } catch (RuntimeException e) {
+//            //A RuntimeException was encountered. The provided String
+//            //had an error.
+//            json.put("error", "An error was encountered during MD5 hashing. Message: " + e.getMessage());
+//            json.put("info", "You must pass a String through the ?text= parameter for a hash to be calculated.");
+//        }
 //    }
+//    ----------------------------------------------------------------
 
-//    public static String getMd5(String input) {
+//        public static String getMd5(String input){
 //        try {
 //            // Static getInstance method is called with hashing MD5
 //            MessageDigest md = MessageDigest.getInstance("MD5");
@@ -91,23 +125,27 @@ public class JsonController {
 //            throw new RuntimeException(e);
 //        }
 //    }
-
-    // DateTime with Alex
-    @GetMapping("/date-time")
-    public DateTime dateTime() {
-        long currentTime = System.currentTimeMillis();
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss SSS");
-        String dateResponse = dtf.format(now);
-        String myDate = dateResponse.substring(0, 10);
-        String myTime = dateResponse.substring(11, 19);
-
-        return (new DateTime(myTime, myDate, currentTime));
+//    }
+//    public String md5(String input)  {
+//        String md5Hex = DigestUtils.md5Hex(input).toUpperCase();
+//        return md5Hex;
+//    }
+//    public String MD5(String md5) {
+//        try {
+//            java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
+//            byte[] array = md.digest(md5.getBytes());
+//            StringBuffer sb = new StringBuffer();
+//            for (int i = 0; i < array.length; ++i) {
+//                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,3));
+//            }
+//            return sb.toString();
+//        } catch (java.security.NoSuchAlgorithmException e) {
+//        }
+//        return null;
+//    }
     }
-}
 
 
-// TODO needs to be editable by user
 //    @GetMapping("/echo")
 //    public Map<String, String> echo() {
 //        Map<String, String> map = new HashMap<>();

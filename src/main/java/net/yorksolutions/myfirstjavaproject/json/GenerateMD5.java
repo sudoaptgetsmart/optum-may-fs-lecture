@@ -6,7 +6,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class GenerateMD5 {
-    public GenerateMD5(String text) {
+    public GenerateMD5(String text) throws NoSuchAlgorithmException {
     }
 
     public static String generateMD5(String to_be_md5) {

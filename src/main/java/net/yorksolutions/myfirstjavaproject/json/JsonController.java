@@ -1,26 +1,22 @@
 package net.yorksolutions.myfirstjavaproject.json;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import net.yorksolutions.myfirstjavaproject.Controller;
-import org.springframework.util.DigestUtils;
+import net.yorksolutions.myfirstjavaproject.Cache;
+import net.yorksolutions.myfirstjavaproject.CacheRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.bind.DatatypeConverter;
-import java.math.BigInteger;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
-import java.io.IOException;
+import java.util.Optional;
 
 @CrossOrigin
 @RestController
 public class JsonController {
+
+    final CacheRepository repository;
 
     // Assignment
 
@@ -29,8 +25,9 @@ public class JsonController {
     void setHttpServletRequest(HttpServletRequest httpServletRequest) {
         this.httpServletRequest = httpServletRequest;
     }
-
-    JsonController() {
+    @Autowired
+    JsonController(CacheRepository repository) {
+        this.repository = repository;
         httpServletRequest = null;
     }
 
@@ -70,8 +67,17 @@ public class JsonController {
     // MD5
     @GetMapping("/md5")
     @CrossOrigin
-    GenerateMD5 md5(@RequestParam(name= "text") String text) {
-        return new GenerateMD5(text);
+    GenerateMD5 md5(@RequestParam(name= "text") String text) throws NoSuchAlgorithmException {
+        Optional<Cache> result = repository.findByInput(text);
+        if(result.isPresent()) {
+            return result.get().output;
+        }
+        GenerateMD5 output = new GenerateMD5(text);
+        Cache cache = new Cache();
+        cache.input = text;
+        cache.output =output;
+        repository.save(cache);
+        return output;
     }
 //    public static String to_be_md5 = httpServletRequest.getParameter("text");
 //

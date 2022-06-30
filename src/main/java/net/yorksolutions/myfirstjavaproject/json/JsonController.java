@@ -25,6 +25,7 @@ public class JsonController {
     void setHttpServletRequest(HttpServletRequest httpServletRequest) {
         this.httpServletRequest = httpServletRequest;
     }
+
     @Autowired
     JsonController(CacheRepository repository) {
         this.repository = repository;
@@ -42,14 +43,6 @@ public class JsonController {
     Map<String, String> headers(@RequestHeader Map<String, String> headers) {
         return headers;
     }
-//    NOT USED
-//    @GetMapping("/date2")
-//    public String main(String[] args) {
-//        // Instantiate a Date object
-//        Date date = new Date();
-//        // display time and date using toString()
-//        return (date.toString());
-//    }
 
     // DateTime with Alex
     @GetMapping("/date-time")
@@ -67,18 +60,31 @@ public class JsonController {
     // MD5
     @GetMapping("/md5")
     @CrossOrigin
-    GenerateMD5 md5(@RequestParam(name= "text") String text) throws NoSuchAlgorithmException {
+    GenerateMD5 md5(@RequestParam(name = "text") String text) throws NoSuchAlgorithmException {
         Optional<Cache> result = repository.findByInput(text);
-        if(result.isPresent()) {
+        if (result.isPresent()) {
             return result.get().output;
         }
         GenerateMD5 output = new GenerateMD5(text);
         Cache cache = new Cache();
         cache.input = text;
-        cache.output =output;
+        cache.output = output;
         repository.save(cache);
         return output;
     }
+}
+
+
+//    NOT USED
+//    @GetMapping("/date2")
+//    public String main(String[] args) {
+//        // Instantiate a Date object
+//        Date date = new Date();
+//        // display time and date using toString()
+//        return (date.toString());
+//    }
+// ----------------------------------------------------------------
+
 //    public static String to_be_md5 = httpServletRequest.getParameter("text");
 //
 //    static {
@@ -149,7 +155,7 @@ public class JsonController {
 //        }
 //        return null;
 //    }
-    }
+//    }
 
 
 //    @GetMapping("/echo")

@@ -1,6 +1,5 @@
 package net.yorksolutions.myfirstjavaproject.json;
 
-import net.yorksolutions.myfirstjavaproject.Cache;
 import net.yorksolutions.myfirstjavaproject.CacheRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -56,7 +55,7 @@ public class JsonController {
 
         return (new DateTime(myTime, myDate, currentTime));
     }
-
+// TODO fix input and output
     // MD5
     @GetMapping("/md5")
     @CrossOrigin
@@ -68,7 +67,7 @@ public class JsonController {
         GenerateMD5 output = new GenerateMD5(text);
         Cache cache = new Cache();
         cache.input = text;
-        cache.output = output;
+        cache.output = String.valueOf(output);
         repository.save(cache);
         return output;
     }

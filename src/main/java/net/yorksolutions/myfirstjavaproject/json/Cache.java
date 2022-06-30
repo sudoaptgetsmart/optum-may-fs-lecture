@@ -1,4 +1,4 @@
-package net.yorksolutions.myfirstjavaproject;
+package net.yorksolutions.myfirstjavaproject.json;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

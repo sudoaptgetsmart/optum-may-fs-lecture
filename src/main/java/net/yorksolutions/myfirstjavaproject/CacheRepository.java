@@ -1,5 +1,6 @@
 package net.yorksolutions.myfirstjavaproject;
 
+import net.yorksolutions.myfirstjavaproject.json.Cache;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

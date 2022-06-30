@@ -55,7 +55,7 @@ public class JsonController {
 
         return (new DateTime(myTime, myDate, currentTime));
     }
-// TODO fix input and output
+
     // MD5
     @GetMapping("/md5")
     @CrossOrigin

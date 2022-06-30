@@ -22,7 +22,7 @@ public class JsonController {
     static HttpServletRequest httpServletRequest;
 
     void setHttpServletRequest(HttpServletRequest httpServletRequest) {
-        this.httpServletRequest = httpServletRequest;
+        JsonController.httpServletRequest = httpServletRequest;
     }
 
     @Autowired
@@ -33,8 +33,8 @@ public class JsonController {
 
     @GetMapping("/ip2")
     public Ip ip(HttpServletRequest httpServletRequest) {
-        if (this.httpServletRequest != null)
-            httpServletRequest = this.httpServletRequest;
+        if (JsonController.httpServletRequest != null)
+            httpServletRequest = JsonController.httpServletRequest;
         return new Ip(httpServletRequest.getRemoteAddr());
     }
 
@@ -179,7 +179,7 @@ public class JsonController {
 //                //If this exception is thrown, that means there are an odd number of tokens
 //                //in the request url (in other terms, there is a key value specified, but no
 //                //value). It's OK, because we'll just put a blank String into the value component.
-//            }
+//
 //
 //            //Put the key:value component into the JSON object.
 //            map.put(key, value);
